@@ -4,6 +4,7 @@
   * Autor: Priit Pääsukene
   **/
         GLOBAL $salt,$client_id,$client_times_visited,$token;
+        include 'config.php';
 
 
         /** generate_new_client()  - genereerib uue kliendi parameetrid
