@@ -47,19 +47,34 @@
         $memcache->set($token."_id",$client_id);
         $memcache->set($token."_times_visited",$client_times_visited);
 
+#main app section
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 <title>Test app</title>
 <body>
-<h2>Hello World!</h2>
-<p>
-You are client nr. <?php echo $client_id; ?> and you have visited
-this page <?php echo $client_times_visited; ?> times.
-</p>
-<p>
-<a href="/?token=<?php echo $token; ?>">Continue</a>
-</p>
+<?php if ($state==LOGGED_IN) { 
+?>
+    <h2>Hello World!</h2>
+    <p>
+    You are client nr. <?php echo $client_id; ?> and you have visited
+    this page <?php echo $client_times_visited; ?> times.
+    </p>
+    <p>
+    <a href="/?token=<?php echo $token; ?>">Continue</a>
+    </p>
+<?php
+} else {
+    if ($state==REGISTERED) echo "<h2>Account registered. please repeat your password to log in.</h2>";
+?>
+<form action="/" method="POST" >
+<input type="text" name="email"/><br/>
+<input type="text" name="password"/><br/>
+<submit name="Register" value="Register"/><submit name="Login" value="Login"/> 
+</form>
+<?php
+}
+?>
 </body>
 </html>
