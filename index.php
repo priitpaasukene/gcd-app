@@ -63,12 +63,13 @@
     </p>
     <p>
     <a href="/?token=<?php echo $token; ?>">Continue</a>
+    <a href="/?token=<?php echo $token; ?>"></a>
     </p>
 <?php
 } else {
     if ($state==REGISTERED) echo "<h2>Account registered. please repeat your password to log in.</h2>";
 ?>
-<form action="/" method="POST" >
+<form action="/" method="GET" >
 <input type="text" name="email"/><br/>
 <input type="text" name="password"/><br/>
 <submit name="Register" value="Register"/><submit name="Login" value="Login"/> 
