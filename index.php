@@ -24,14 +24,14 @@
 
         #Login logic part
         #TODO: replace preg_match with proper verify function
-        if ( isset($_GET['email']) && preg_match('/^[[:alnum:]]+$/',$_GET['email']) ){
-            $username=$_GET['email'];
+        if ( isset($_POST['email']) && preg_match('/^[[:alnum:]]+$/',$_POST['email']) ){
+            $username=$_POST['email'];
         }
-        if ( isset($_GET['password']) && preg_match('/^[[:alnum:]]+$/',$_GET['password']) ){
-            $password=$_GET['password'];
+        if ( isset($_POST['password']) && preg_match('/^[[:alnum:]]+$/',$_POST['password']) ){
+            $password=$_POST['password'];
         }
 
-        switch ( $_GET['action'] ) {
+        switch ( $_POST['action'] ) {
             case "Login":
                 if ( isset($username) && isset($password) ) {
                     $password_hash=$memcache->get('user_'.$username);
@@ -69,7 +69,7 @@
     if ($state==LOGIN_FAILED) echo "<h2>Login failed. please try again.</h2>";
 ?>
 <b>for testing purposes use only alphanumeric passwords.</b><br>
-<form action="/" method="GET" >
+<form action="/" method="POST" >
 e-mail/username: <input type="text" name="email"/><br/>
 Password: <input type="text" name="password"/><br/>
 <input type="submit" submit name="action" value="Register"/><input type="submit" name="action" value="Login"/> 
