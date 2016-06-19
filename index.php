@@ -47,6 +47,8 @@
         $memcache->set($token."_id",$client_id);
         $memcache->set($token."_times_visited",$client_times_visited);
 
+
+
 #main app section
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -70,9 +72,9 @@
     if ($state==REGISTERED) echo "<h2>Account registered. please repeat your password to log in.</h2>";
 ?>
 <form action="/" method="GET" >
-<input type="text" name="email"/><br/>
-<input type="text" name="password"/><br/>
-<submit name="Register" value="Register"/><submit name="Login" value="Login"/> 
+e-mail: <input type="text" name="email"/><br/>
+Password: <input type="text" name="password"/><br/>
+<input type="submit" submit name="Register" value="Register"/><input type="submit" name="Login" value="Login"/> 
 </form>
 <?php
 }
