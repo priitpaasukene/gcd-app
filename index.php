@@ -1,11 +1,14 @@
 <?php
-/** Testprogramm, mis genereerib kliendi id, salvestab räsi memcached serverisse
-  * ja tagastab, mitu korda antud klient on lehekülge külastanud.
-  * Autor: Priit Pääsukene
+/** Test program for really simple login, registration and password verification.
+  * Just POC for chef testing. Do not rely on it.
+  * Has tons of bugs.
+  * Author: Priit Pääsukene
   **/
-        GLOBAL $salt,$client_id,$client_times_visited,$token;
+        # Config include
+        #TODO: pre-evaluate variables expected from config.php
         include 'config.php';
 
+        # State machine state declaration
         define("DEFAULT_STATE",-1);
         define("REGISTERED",1);
         define("LOGGED_IN",2);
@@ -14,6 +17,8 @@
 
         $state=DEFAULT_STATE;
 
+        # Basic error handling and  memcache connection
+        # variables should come from config.php
         try {
                 $memcache = new Memcache;
                 $memcache->connect($memcache_server,$memcache_port);
@@ -23,7 +28,10 @@
         }
 
         #Login logic part
-        #TODO: replace preg_match with proper verify function
+        #basic auth and verify functionality. Populate $state variable
+
+        #populate local variables.
+        #TODO: replace preg_match with proper username and password policy verify function
         if ( isset($_POST['email']) && preg_match('/^[[:alnum:]]+$/',$_POST['email']) ){
             $username=$_POST['email'];
         }
@@ -31,6 +39,7 @@
             $password=$_POST['password'];
         }
 
+        #switch form action
         switch ( $_POST['action'] ) {
             case "Login":
                 if ( isset($username) && isset($password) ) {
@@ -38,15 +47,15 @@
                     if ( $password_hash && password_verify($password,$password_hash) )
                         $state=LOGGED_IN;
                 } else
-                    $state==LOGIN_FAILED;
+                    $state=LOGIN_FAILED;
                 break;
             case "Register":
                 if ( !$memcache->get('user_'.$username) && isset($password) ) {
                     $password_hash=password_hash($password,PASSWORD_BCRYPT);
                     $memcache->set('user_'.$username,$password_hash);
-                    $state==REGISTERED;
+                    $state=REGISTERED;
                 } else 
-                    $state==REGISTER_FAILED;
+                    $state=REGISTER_FAILED;
                 break;
         }
 
