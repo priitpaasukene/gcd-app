@@ -6,9 +6,9 @@
         GLOBAL $salt,$client_id,$client_times_visited,$token;
         include 'config.php';
 
-        define("REGISTERED",1)
-        define("LOGGED_IN",2)
-        define("REGISTER_FAILED",3)
+        define("REGISTERED",1);
+        define("LOGGED_IN",2);
+        define("REGISTER_FAILED",3);
 
 
         /** generate_new_client()  - genereerib uue kliendi parameetrid
