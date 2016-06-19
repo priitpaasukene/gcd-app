@@ -47,7 +47,32 @@
         $memcache->set($token."_id",$client_id);
         $memcache->set($token."_times_visited",$client_times_visited);
 
+        #Login logic part
+        #TODO: replace preg_match with proper verify function
+        if ( isset($_GET['email']) && preg_match('/^[[:alnum:]]+$/',$_GET['email']) ){
+            username=$_GET['email'];
+        }
+        if ( isset($_GET['password']) && preg_match('/^[[:alnum:]]+$/',$_GET['password']) ){
+            password=$_GET['password'];
+        }
 
+        switch ( $_GET['action'] ) {
+            case "Login":
+                if ( isset($username) && isset($password) ) {
+                    $password_hash=$memcache->get('user_'.$username);
+                    if ( $password_hash && password_verify($password,$password_hash) )
+                        $state=LOGGED_IN;
+                }
+                break;
+            case "Register"
+                if ( !$memcache->get('user_'.$username) && isset($password) ) {
+                    $password_hash=password_hash($password,'PASSWORD_BCRYPT');
+                    $memcache->set('user_'.$username,$password_hash);
+                    $state==REGISTERED;
+                }
+                break;
+
+        }
 
 #main app section
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -70,11 +95,13 @@
 <?php
 } else {
     if ($state==REGISTERED) echo "<h2>Account registered. please repeat your password to log in.</h2>";
+    if ($state==REGISTER_FAILED) echo "<h2>Account registration failed. please try again.</h2>";
 ?>
+<b>for testing purposes use only alphanumeric passwords.</b><br>
 <form action="/" method="GET" >
-e-mail: <input type="text" name="email"/><br/>
+e-mail/username: <input type="text" name="email"/><br/>
 Password: <input type="text" name="password"/><br/>
-<input type="submit" submit name="Register" value="Register"/><input type="submit" name="Login" value="Login"/> 
+<input type="submit" submit name="action" value="Register"/><input type="submit" name="action" value="Login"/> 
 </form>
 <?php
 }
