@@ -10,6 +10,7 @@
         define("REGISTERED",1);
         define("LOGGED_IN",2);
         define("REGISTER_FAILED",3);
+        define("LOGIN_FAILED",4);
 
         $state=DEFAULT_STATE;
 
@@ -68,14 +69,16 @@
                     $password_hash=$memcache->get('user_'.$username);
                     if ( $password_hash && password_verify($password,$password_hash) )
                         $state=LOGGED_IN;
-                }
+                } else
+                    $state==LOGIN_FAILED;
                 break;
             case "Register":
                 if ( !$memcache->get('user_'.$username) && isset($password) ) {
                     $password_hash=password_hash($password,PASSWORD_BCRYPT);
                     $memcache->set('user_'.$username,$password_hash);
                     $state==REGISTERED;
-                }
+                } else 
+                    $state==REGISTER_FAILED;
                 break;
 
         }
