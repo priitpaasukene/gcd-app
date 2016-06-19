@@ -71,7 +71,7 @@
 <b>for testing purposes use only alphanumeric passwords.</b><br>
 <form action="/" method="POST" >
 e-mail/username: <input type="text" name="email"/><br/>
-Password: <input type="text" name="password"/><br/>
+Password: <input type="password" name="password"/><br/>
 <input type="submit" submit name="action" value="Register"/><input type="submit" name="action" value="Login"/> 
 </form>
 <?php
