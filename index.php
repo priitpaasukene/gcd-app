@@ -6,10 +6,12 @@
         GLOBAL $salt,$client_id,$client_times_visited,$token;
         include 'config.php';
 
+        define("DEFAULT_STATE",-1);
         define("REGISTERED",1);
         define("LOGGED_IN",2);
         define("REGISTER_FAILED",3);
 
+        $state=DEFAULT_STATE;
 
         /** generate_new_client()  - genereerib uue kliendi parameetrid
           *
