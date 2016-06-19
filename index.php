@@ -50,10 +50,10 @@
         #Login logic part
         #TODO: replace preg_match with proper verify function
         if ( isset($_GET['email']) && preg_match('/^[[:alnum:]]+$/',$_GET['email']) ){
-            username=$_GET['email'];
+            $username=$_GET['email'];
         }
         if ( isset($_GET['password']) && preg_match('/^[[:alnum:]]+$/',$_GET['password']) ){
-            password=$_GET['password'];
+            $password=$_GET['password'];
         }
 
         switch ( $_GET['action'] ) {
