@@ -64,7 +64,7 @@
                         $state=LOGGED_IN;
                 }
                 break;
-            case "Register"
+            case "Register":
                 if ( !$memcache->get('user_'.$username) && isset($password) ) {
                     $password_hash=password_hash($password,'PASSWORD_BCRYPT');
                     $memcache->set('user_'.$username,$password_hash);
